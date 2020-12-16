@@ -1,0 +1,49 @@
+service: sls-rest-api
+
+frameworkVersion: '2'
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 128
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'ap-southeast-1'}
+  apiGateway:
+    shouldStartNameWithService: true
+
+functions:
+  create:
+    handler: handlers/todo.create
+    events:
+      - http:
+          path: todos
+          method: post
+  getOne:
+    handler: handlers/todo.getOne
+    events:
+      - http:
+          path: todos/{id}
+          method: get
+  getAll:
+    handler: handlers/todo.getAll
+    events:
+      - http:
+          path: todos
+          method: get
+  update:
+    handler: handlers/todo.update
+    events:
+      - http:
+          path: todos/{id}
+          method: put
+  delete:
+    handler: handlers/todo.delete
+    events:
+      - http:
+          path: todos/{id}
+          method: delete
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
