@@ -11,6 +11,8 @@ provider:
   region: ${opt:region, 'ap-southeast-1'}
   apiGateway:
     shouldStartNameWithService: true
+  vpc: ${file(vpc/vpc-env.config.yml):vpc-${self:provider.stage}}
+  timeout: 180
 
 functions:
   create:
