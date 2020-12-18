@@ -1,11 +1,10 @@
+
+const commonMiddlewares = require('../middlewares/commonMiddlewares');
 const { connectToDatabase } = require('../db');
 
 const Todo = require('../models/todo');
 
-
-module.exports.create = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false;
-  
+const createTodo = async (event) => {
   try {
     await connectToDatabase();
 
@@ -24,9 +23,9 @@ module.exports.create = async (event, context) => {
   }
 };
 
-module.exports.getOne = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false;
+module.exports.createTodo = commonMiddlewares(createTodo);
 
+const getOneTodo = async (event) => {
   try {
     await connectToDatabase();
     
@@ -45,9 +44,9 @@ module.exports.getOne = async (event, context) => {
   }
 };
 
-module.exports.getAll = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false;
+module.exports.getOneTodo = commonMiddlewares(getOneTodo);
 
+const getAllTodos = async (event) => {
   try {
     await connectToDatabase();
     
@@ -66,9 +65,9 @@ module.exports.getAll = async (event, context) => {
   }
 };
 
-module.exports.update = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false;
+module.exports.getAllTodos = commonMiddlewares(getAllTodos);
 
+const updateTodo = async (event) => {
   try {
     await connectToDatabase();
 
@@ -87,9 +86,10 @@ module.exports.update = async (event, context) => {
   }
 };
 
-module.exports.delete = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false;
+module.exports.updateTodo = commonMiddlewares(updateTodo);
 
+
+const deleteTodo = async (event) => {
   try {
     await connectToDatabase();
     
@@ -108,3 +108,4 @@ module.exports.delete = async (event, context) => {
   }
 };
 
+module.exports.deleteTodo = commonMiddlewares(deleteTodo);
