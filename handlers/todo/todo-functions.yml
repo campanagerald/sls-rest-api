@@ -1,0 +1,39 @@
+createTodo:
+  handler: handlers/todo/todo.createTodo
+  events:
+    - http:
+        path: todos
+        method: post
+        authorizer: authValidate
+
+getOneTodo:
+  handler: handlers/todo/todo.getOneTodo
+  events:
+    - http:
+        path: todos/{id}
+        method: get
+        authorizer: authValidate
+
+getAllTodos:
+  handler: handlers/todo/todo.getAllTodos
+  events:
+    - http:
+        path: todos
+        method: get
+        authorizer: authValidate
+
+updateTodo:
+  handler: handlers/todo/todo.updateTodo
+  events:
+    - http:
+        path: todos/{id}
+        method: put
+        authorizer: authValidate
+
+deleteTodo:
+  handler: handlers/todo/todo.deleteTodo
+  events:
+    - http:
+        path: todos/{id}
+        method: delete
+        authorizer: authValidate

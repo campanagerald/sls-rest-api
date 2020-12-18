@@ -15,36 +15,15 @@ provider:
   timeout: 180
 
 functions:
-  createTodo:
-    handler: handlers/todo.createTodo
-    events:
-      - http:
-          path: todos
-          method: post
-  getOneTodo:
-    handler: handlers/todo.getOneTodo
-    events:
-      - http:
-          path: todos/{id}
-          method: get
-  getAllTodos:
-    handler: handlers/todo.getAllTodos
-    events:
-      - http:
-          path: todos
-          method: get
-  updateTodo:
-    handler: handlers/todo.updateTodo
-    events:
-      - http:
-          path: todos/{id}
-          method: put
-  deleteTodo:
-    handler: handlers/todo.deleteTodo
-    events:
-      - http:
-          path: todos/{id}
-          method: delete
+  authValidate: ${file(handlers/auth/auth-functions.yml):authValidate}
+  register: ${file(handlers/auth/auth-functions.yml):register}
+  login: ${file(handlers/auth/auth-functions.yml):login}
+
+  createTodo: ${file(handlers/todo/todo-functions.yml):createTodo}
+  getOneTodo: ${file(handlers/todo/todo-functions.yml):getOneTodo}
+  getAllTodos: ${file(handlers/todo/todo-functions.yml):getAllTodos}
+  updateTodo: ${file(handlers/todo/todo-functions.yml):updateTodo}
+  deleteTodo: ${file(handlers/todo/todo-functions.yml):deleteTodo}
 
 plugins:
   - serverless-offline

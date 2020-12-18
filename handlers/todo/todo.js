@@ -1,14 +1,16 @@
 
-const commonMiddlewares = require('../middlewares/commonMiddlewares');
-const { connectToDatabase } = require('../db');
+const commonMiddlewares = require('../../middlewares/commonMiddlewares');
+const { connectToDatabase } = require('../../db');
 
-const Todo = require('../models/todo');
+const Todo = require('../../models/todo');
 
-const createTodo = async (event) => {
+const createTodo = async (event) => {  
   try {
     await connectToDatabase();
 
-    const todo = await Todo.create(JSON.parse(event.body));
+    const { body, requestContext } = event;
+    
+    const todo = await Todo.create({ ...body, owner: requestContext.authorizer.principalId });
     
     return {
       statusCode: 200,
@@ -28,8 +30,10 @@ module.exports.createTodo = commonMiddlewares(createTodo);
 const getOneTodo = async (event) => {
   try {
     await connectToDatabase();
-    
-    const todo = await Todo.findById(event.pathParameters.id);
+
+    const { pathParameters } = event;
+
+    const todo = await Todo.findById(pathParameters.id);
     
     return {
       statusCode: 200,
@@ -70,8 +74,10 @@ module.exports.getAllTodos = commonMiddlewares(getAllTodos);
 const updateTodo = async (event) => {
   try {
     await connectToDatabase();
+    
+    const { body, pathParameters } = event;
 
-    const todo = await Todo.findByIdAndUpdate(event.pathParameters.id, JSON.parse(event.body), { new: true });
+    const todo = await Todo.findByIdAndUpdate(pathParameters.id, body, { new: true });
     
     return {
       statusCode: 200,
@@ -92,8 +98,10 @@ module.exports.updateTodo = commonMiddlewares(updateTodo);
 const deleteTodo = async (event) => {
   try {
     await connectToDatabase();
-    
-    const todo = await Todo.findByIdAndRemove(event.pathParameters.id);
+
+    const { pathParameters } = event;
+
+    const todo = await Todo.findByIdAndRemove(pathParameters.id);
 
     return {
       statusCode: 200,

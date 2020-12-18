@@ -4,7 +4,7 @@
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "sls offline"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +13,9 @@
     "serverless-offline": "^6.8.0"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "http-errors": "^1.8.0",
+    "jsonwebtoken": "^8.5.1",
     "middy": "^0.36.0",
     "mongoose": "^5.11.8",
     "serverless-dotenv-plugin": "^3.1.0"

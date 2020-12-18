@@ -1,0 +1,16 @@
+register:
+  handler: handlers/auth/auth.register
+  events:
+    - http:
+        path: register
+        method: post
+
+login:
+  handler: handlers/auth/auth.login
+  events:
+    - http:
+        path: login
+        method: post
+
+authValidate:
+  handler: handlers/auth/auth.authValidate
