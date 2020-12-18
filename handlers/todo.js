@@ -101,7 +101,7 @@ module.exports.delete = async (event, context) => {
     };
   } catch (error) {
     return {
-      statusCode: err.statusCode || 500,
+      statusCode: error.statusCode || 500,
       headers: { 'Content-Type': 'text/plain' },
       body: 'Could not fetch the todos.'
     };
